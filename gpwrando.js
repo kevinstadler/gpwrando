@@ -1,7 +1,17 @@
 const GeoTIFF = require('geotiff.js');
 
-const getImage = async (filename) => {
-	return await (await GeoTIFF.fromUrl(filename)).getImage();
+const corsFetch = (url) => {
+	return fetch(url, { mode: 'no-cors' });
+}
+
+const getImage = async (url) => {
+	// TODO handle errors
+	const response = await corsFetch(url);
+	if (response.ok) {
+		return await (await GeoTIFF.fromArrayBuffer(await response.arrayBuffer())).getImage();
+	} else {
+		return null;
+	}
 }
 
 const createCumTable = async (image) => {
@@ -26,10 +36,20 @@ const getIndex = (cumTable, value) => {
 }
 
 const path = 'https://kevinstadler.github.io/gpwrando/data/'
+//const path = '/data/';
+
+let overviewTable;
+
+const getOverviewTable = async () => {
+	if (!overviewTable) {
+		overviewTable = await createCumTable(await getImage(path + 'overview.tif'));
+	}
+	return overviewTable;
+}
 
 // returns a (promise of a) bounding box of a randomly sampled individual
 module.exports = async () => {
-	const overview = await createCumTable(await getImage(path + 'overview.tif'))
+	const overview = await getOverviewTable();
 	const r = Math.random() * overview.cum[ overview.cum.length - 1 ];
 	const oi = getIndex(overview, r);
 
