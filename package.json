@@ -1,0 +1,20 @@
+{
+  "name": "gpwrando",
+  "version": "1.0.1",
+  "description": "random geographical samples based on weights from the gridded population of the world",
+  "main": "gpwrando.js",
+  "scripts": {
+    "publish": "publish-to-git"
+  },
+  "author": "Kevin Stadler",
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "geotiff.js": "^1.0.1"
+  },
+  "files": [
+    "gpwrando.js"
+  ],
+  "devDependencies": {
+    "publish-to-git": "^1.1.7"
+  }
+}
