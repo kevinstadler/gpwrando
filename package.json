@@ -1,6 +1,6 @@
 {
   "name": "gpwrando",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "random geographical samples based on weights from the gridded population of the world",
   "main": "gpwrando.js",
   "scripts": {

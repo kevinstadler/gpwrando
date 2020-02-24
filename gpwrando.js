@@ -56,15 +56,14 @@ module.exports = async () => {
 	const cellImage = await getImage(path + overview.indices[oi][0] + '/' + overview.indices[oi][1] + '.tif');
 	const cell = await createCumTable(cellImage);
 	// subtract offset (unless in first cell)
-	const ci = getIndex(cell, oi === 0 ? r : r - overview.cum[oi-1]);
+	const ci = getIndex(cell, oi === 0 ? r : r - overview.cum[oi - 1]);
 
 	const resolution = cellImage.getResolution();
 	const origin = cellImage.getOrigin();
-
 	return([
 		origin[0] + cell.indices[ci][0] * resolution[0],
-		origin[1] + (cell.indices[ci][0]+1) * resolution[1],
-		origin[0] + cell.indices[ci][1] * resolution[0],
+		origin[1] + cell.indices[ci][1] * resolution[1],
+		origin[0] + (cell.indices[ci][0]+1) * resolution[0],
 		origin[1] + (cell.indices[ci][1]+1) * resolution[1],
 		]);
 }
